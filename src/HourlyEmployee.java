@@ -25,9 +25,19 @@ public class HourlyEmployee extends Employee  implements Payable {
 
     @Override
     public PayrollResult calculatePay() {
+
         double gross = hourlyRate * hoursWorked;
+
+        if (hoursWorked > 160) {
+            var overtimeHours = hoursWorked - 160;
+
+            gross -= overtimeHours * hourlyRate;
+            gross += overtimeHours * hourlyRate * 1.5;
+        }
+
         double tax = gross * taxRate;
         double net = gross - tax;
         return new PayrollResult(gross, tax, net);
+
     }
 }
