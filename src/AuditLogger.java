@@ -23,17 +23,17 @@ public class AuditLogger {
     }
 
     private static String safeName(Employee employee) {
-        if (employee == null || employee.name == null || employee.name.trim().isEmpty()) {
+        if (employee == null || employee.getName() == null || employee.getName().trim().isEmpty()) {
             return "<unknown>";
         }
-        return employee.name;
+        return employee.getName();
     }
 
     private static String safeType(Employee employee) {
-        if (employee == null || employee.type == null) {
+        if (employee == null || employee.getType() == null) {
             return "<null>";
         }
-        return employee.type;
+        return employee.getType().toString();
     }
 }
 

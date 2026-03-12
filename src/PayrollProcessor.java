@@ -5,11 +5,16 @@ import java.util.List;
 
 public class PayrollProcessor {
 
-    public static List<Employee> employees = new ArrayList<>();
+    private static final List<Employee> employees = new ArrayList<>();
 
-    public static double TAX_RATE = 0.2;
+    public static final double TAX_RATE = 0.2;
 
     public static void addEmployee(Employee e) {
+
+        if(e == null) {
+            throw new IllegalArgumentException("Employee cannot be null");
+        }
+
         employees.add(e);
         AuditLogger.logEmployeeAdded(e);
     }
@@ -23,25 +28,20 @@ public class PayrollProcessor {
         for (Employee e : employees) {
             ValidationService.validateEmployee(e);
 
-            double pay = 0;
-
-            if (e != null && "salaried".equals(e.type)) {
-                double gross = e.monthlySalary;
-                pay = calculateSalariedPay(e);
-                summary.recordSalaried(gross, pay);
-            } else if (e != null && "contractor".equals(e.type)) {
-                double gross = e.hourlyRate * e.hoursWorked;
-                pay = calculateContractorPay(e);
-                summary.recordContractor(gross, pay);
-            } else {
-                System.out.println("Unknown employee type: " + (e == null ? "<null>" : e.type));
+            if (!(e instanceof Payable payable)) {
+                System.out.println("Unknown employee type: " + (e == null ? "<null>" : e.getType()));
                 summary.recordUnknown();
                 AuditLogger.logUnknownType(e);
+                continue;
             }
 
-            total += pay;
-            System.out.println("Pay for " + (e == null ? "<unknown>" : e.name) + ": " + CurrencyFormatter.format(pay));
-            AuditLogger.logPayComputed(e, pay);
+            PayrollResult result = payable.calculatePay();
+            total += result.netPay();
+            summary.record(e, result);
+
+            System.out.println("Pay for " + (e == null ? "<unknown>" : e.getName()) + ": "
+                    + CurrencyFormatter.format(result.netPay()));
+            AuditLogger.logPayComputed(e, result.netPay());
         }
 
         System.out.println("Total payroll: " + CurrencyFormatter.format(total));
@@ -49,26 +49,21 @@ public class PayrollProcessor {
         AuditLogger.logPayrollEnd(summary);
     }
 
-    public static double calculateSalariedPay(Employee e) {
-        double tax = e.monthlySalary * TAX_RATE;
-        return e.monthlySalary - tax;
-    }
-
-    public static double calculateContractorPay(Employee e) {
-        return e.hourlyRate * e.hoursWorked;
-    }
-
     private static void printSummary(PayrollSummary summary) {
         System.out.println("Payroll summary:");
         System.out.println("  salaried count: " + summary.getSalariedCount());
         System.out.println("  contractor count: " + summary.getContractorCount());
+        System.out.println("  hourly count: " + summary.getHourlyCount());
         System.out.println("  unknown count: " + summary.getUnknownCount());
         System.out.println("  total gross: " + CurrencyFormatter.format(summary.getTotalGross()));
+        System.out.println("  total tax: " + CurrencyFormatter.format(summary.getTotalTax()));
         System.out.println("  total net: " + CurrencyFormatter.format(summary.getTotalNet()));
     }
 
     private static double calculateUnusedBonus(Employee e) {
-        double bonus = 0.05 * (e.type.equals("salaried") ? e.monthlySalary : e.hourlyRate * e.hoursWorked);
-        return bonus;
+        if (e instanceof Payable payable) {
+            return 0.05 * payable.calculatePay().grossPay();
+        }
+        return 0;
     }
 }

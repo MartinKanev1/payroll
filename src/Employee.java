@@ -1,17 +1,18 @@
-public class Employee {
+public abstract class Employee {
 
-    public String name;
-    public String type; // "salaried", "contractor"
+    private String name;
+    private EmployeeType type;
 
-    // salaried
-    public double monthlySalary;
-
-    // contractor
-    public double hourlyRate;
-    public int hoursWorked;
-
-    public Employee(String name, String type) {
+    protected Employee(String name, EmployeeType type) {
         this.name = name;
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public EmployeeType getType() {
+        return type;
     }
 }

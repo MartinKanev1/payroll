@@ -2,23 +2,29 @@ public class PayrollSummary {
 
     private int salariedCount;
     private int contractorCount;
+    private int hourlyCount;
     private int unknownCount;
     private int employeeCount;
+
     private double totalGross;
+    private double totalTax;
     private double totalNet;
 
-    public void recordSalaried(double gross, double net) {
-        salariedCount++;
+    public void record(Employee employee, PayrollResult result) {
         employeeCount++;
-        totalGross += gross;
-        totalNet += net;
-    }
+        totalGross += result.grossPay();
+        totalTax += result.tax();
+        totalNet += result.netPay();
 
-    public void recordContractor(double gross, double net) {
-        contractorCount++;
-        employeeCount++;
-        totalGross += gross;
-        totalNet += net;
+        if (employee instanceof SalariedEmployee) {
+            salariedCount++;
+        } else if (employee instanceof ContractorEmployee) {
+            contractorCount++;
+        } else if (employee instanceof HourlyEmployee) {
+            hourlyCount++;
+        } else {
+            unknownCount++;
+        }
     }
 
     public void recordUnknown() {
@@ -34,6 +40,10 @@ public class PayrollSummary {
         return contractorCount;
     }
 
+    public int getHourlyCount() {
+        return hourlyCount;
+    }
+
     public int getUnknownCount() {
         return unknownCount;
     }
@@ -46,8 +56,11 @@ public class PayrollSummary {
         return totalGross;
     }
 
+    public double getTotalTax() {
+        return totalTax;
+    }
+
     public double getTotalNet() {
         return totalNet;
     }
 }
-
