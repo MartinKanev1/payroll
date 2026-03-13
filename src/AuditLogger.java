@@ -10,8 +10,8 @@ public class AuditLogger {
         System.out.println("[audit] payroll run started for " + employeeCount + " employees");
     }
 
-    public static void logPayrollEnd(PayrollSummary summary) {
-        System.out.println("[audit] payroll run finished: " + summary.getEmployeeCount() + " employees processed");
+    public static void logPayrollEnd(PayrollReport report) {
+        System.out.println("[audit] payroll run finished: " + report.getEntries().size() + " employees processed");
     }
 
     public static void logUnknownType(Employee employee) {
