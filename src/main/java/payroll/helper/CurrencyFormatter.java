@@ -1,4 +1,4 @@
-package helper;
+package payroll.helper;
 
 import java.text.NumberFormat;
 import java.util.Locale;

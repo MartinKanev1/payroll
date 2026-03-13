@@ -1,4 +1,4 @@
-package models;
+package payroll.models;
 
 public class ContractorEmployee extends Employee implements Payable {
 

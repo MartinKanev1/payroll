@@ -1,4 +1,4 @@
-package models;
+package payroll.models;
 
 public record PayrollReportEntry(
         String employeeName,

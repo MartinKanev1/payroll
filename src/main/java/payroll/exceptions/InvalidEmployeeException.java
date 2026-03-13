@@ -1,4 +1,4 @@
-package exceptions;
+package payroll.exceptions;
 
 public class InvalidEmployeeException extends PayrollException {
 

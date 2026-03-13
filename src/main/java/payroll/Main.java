@@ -1,5 +1,7 @@
-import models.*;
-import services.PayrollProcessor;
+package payroll;
+
+import payroll.models.*;
+import payroll.services.PayrollProcessor;
 
 public class Main {
 

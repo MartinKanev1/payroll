@@ -1,4 +1,4 @@
-package models;
+package payroll.models;
 
 public abstract class Employee {
 

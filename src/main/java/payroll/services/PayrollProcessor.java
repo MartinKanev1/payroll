@@ -1,9 +1,9 @@
-package services;
+package payroll.services;
 
-import exceptions.InvalidEmployeeException;
-import helper.CurrencyFormatter;
-import logging.AuditLogger;
-import models.*;
+import payroll.exceptions.InvalidEmployeeException;
+import payroll.helper.CurrencyFormatter;
+import payroll.logging.AuditLogger;
+import payroll.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,5 +76,9 @@ public class PayrollProcessor {
             return 0.05 * payable.calculatePay().grossPay();
         }
         return 0;
+    }
+
+    public static void clearEmployees() {
+        employees.clear();
     }
 }

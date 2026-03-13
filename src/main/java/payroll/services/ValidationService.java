@@ -1,10 +1,10 @@
-package services;
+package payroll.services;
 
-import exceptions.*;
-import models.ContractorEmployee;
-import models.Employee;
-import models.HourlyEmployee;
-import models.SalariedEmployee;
+import payroll.models.ContractorEmployee;
+import payroll.models.Employee;
+import payroll.models.HourlyEmployee;
+import payroll.models.SalariedEmployee;
+import payroll.exceptions.*;
 
 public class ValidationService {
 

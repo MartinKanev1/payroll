@@ -1,6 +1,6 @@
-package models;
+package payroll.models;
 
-import services.PayrollProcessor;
+import payroll.services.PayrollProcessor;
 
 public class SalariedEmployee extends Employee implements Payable {
 
