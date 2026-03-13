@@ -1,3 +1,7 @@
+package models;
+
+import services.PayrollProcessor;
+
 public class SalariedEmployee extends Employee implements Payable {
 
     private double monthlySalary;

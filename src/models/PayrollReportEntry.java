@@ -1,3 +1,5 @@
+package models;
+
 public record PayrollReportEntry(
         String employeeName,
         EmployeeType employmentType,

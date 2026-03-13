@@ -1,4 +1,6 @@
-public class HourlyEmployee extends Employee  implements Payable {
+package models;
+
+public class HourlyEmployee extends Employee implements Payable {
 
     private double hourlyRate;
     private int hoursWorked;

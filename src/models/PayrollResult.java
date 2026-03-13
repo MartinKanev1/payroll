@@ -1,3 +1,5 @@
+package models;
+
 public record PayrollResult(
         double grossPay,
         double tax,

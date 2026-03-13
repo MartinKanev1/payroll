@@ -1,3 +1,5 @@
+package models;
+
 public class ContractorEmployee extends Employee implements Payable {
 
     private double hourlyRate;

@@ -1,4 +1,9 @@
+package services;
+
+import exceptions.InvalidEmployeeException;
 import helper.CurrencyFormatter;
+import logging.AuditLogger;
+import models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +17,7 @@ public class PayrollProcessor {
     public static void addEmployee(Employee e) {
 
         if(e == null) {
-            throw new IllegalArgumentException("Employee cannot be null");
+            throw new InvalidEmployeeException("Employee cannot be null");
         }
 
         employees.add(e);

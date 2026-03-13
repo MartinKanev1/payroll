@@ -1,46 +1,55 @@
+package services;
+
+import exceptions.*;
+import models.ContractorEmployee;
+import models.Employee;
+import models.HourlyEmployee;
+import models.SalariedEmployee;
+
 public class ValidationService {
 
+
     public static void validateEmployee(Employee employee) {
+
         if (employee == null) {
-            System.out.println("[warn] employee record is null");
-            return;
+            throw new InvalidEmployeeException("models.Employee record cannot be null");
         }
 
         if (employee.getName() == null || employee.getName().trim().isEmpty()) {
-            System.out.println("[warn] employee name is missing");
+            throw new PayrollException("models.Employee name is missing");
         }
 
         if (employee.getType() == null) {
-            System.out.println("[warn] employee type is null for " + safeName(employee));
+            throw new PayrollException("models.Employee type is null for " + safeName(employee));
         }
 
         if (employee instanceof SalariedEmployee salariedEmployee) {
             if (salariedEmployee.getMonthlySalary() < 0) {
-                System.out.println("[warn] negative monthly salary for " + safeName(employee));
+                throw new InvalidSalaryException("Salary cannot be negative for " + safeName(employee));
             }
         }
 
         if (employee instanceof ContractorEmployee contractorEmployee) {
             if (contractorEmployee.getHourlyRate() < 0) {
-                System.out.println("[warn] negative hourly rate for " + safeName(employee));
+                throw new InvalidHourlyRateException("Hourly rate cannot be negative for " + safeName(employee));
             }
 
             if (contractorEmployee.getHoursWorked() < 0) {
-                System.out.println("[warn] negative hours worked for " + safeName(employee));
+                throw new InvalidWorkHoursException("Hours worked cannot be negative for " + safeName(employee));
             }
         }
 
         if (employee instanceof HourlyEmployee hourlyEmployee) {
             if (hourlyEmployee.getHourlyRate() < 0) {
-                System.out.println("[warn] negative hourly rate for " + safeName(employee));
+                throw new InvalidHourlyRateException("Hourly rate cannot be negative for " + safeName(employee));
             }
 
             if (hourlyEmployee.getHoursWorked() < 0) {
-                System.out.println("[warn] negative hours worked for " + safeName(employee));
+                throw new InvalidWorkHoursException("Hours worked cannot be negative for " + safeName(employee));
             }
 
             if (hourlyEmployee.getTaxRate() < 0) {
-                System.out.println("[warn] negative tax rate for " + safeName(employee));
+                throw new InvalidTaxRateException("Tax rate cannot be negative for " + safeName(employee));
             }
         }
     }

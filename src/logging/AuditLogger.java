@@ -1,4 +1,8 @@
+package logging;
+
 import helper.CurrencyFormatter;
+import models.Employee;
+import models.PayrollReport;
 
 public class AuditLogger {
 

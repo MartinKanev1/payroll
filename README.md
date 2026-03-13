@@ -54,7 +54,7 @@ Instead of printing directly inside payroll logic:
 - Generate a structured report object that contains:
 
     For each employee:
-    - Employee name  
+    - models.Employee name  
     - Employment Type  
     - Gross pay  
     - Tax  
